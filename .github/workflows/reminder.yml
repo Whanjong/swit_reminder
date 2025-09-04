@@ -24,4 +24,4 @@ jobs:
       - name: Run script
         env:
           SWIT_WEBHOOK_URL: ${{ secrets.SWIT_WEBHOOK_URL }}
-        run: python send_message.py
+        run: python weekly_meeting_report_creation.py
