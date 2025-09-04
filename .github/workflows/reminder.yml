@@ -1,0 +1,27 @@
+name: Send Swit Reminder
+
+on:
+  schedule:
+    # 매주 목요일 오후 3시(KST 기준) 실행
+    - cron: "0 6 * * 4"   # UTC 6시는 한국 시간 15시 (UTC+9)
+  workflow_dispatch:       # 수동 실행도 가능
+
+jobs:
+  send-reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run script
+        env:
+          SWIT_WEBHOOK_URL: ${{ secrets.SWIT_WEBHOOK_URL }}
+        run: python send_message.py
